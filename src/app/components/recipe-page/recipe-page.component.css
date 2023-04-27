@@ -1,0 +1,19 @@
+
+.container{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.recipe-images{
+  height: auto;
+  width:auto;
+}
+.card{
+  width:115vh;
+  margin-left: auto;
+  margin-right: auto;
+}
+.created-by{
+  float:right;
+}
+

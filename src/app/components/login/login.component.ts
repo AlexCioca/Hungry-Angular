@@ -1,3 +1,4 @@
+import { LogedUserService } from './../../services/loged-user.service';
 import { InternalLogin } from './../../models/internal-auth-dto';
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
@@ -9,6 +10,7 @@ import {
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ExternalAuthDto } from 'src/app/models/auth-dto';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -27,14 +29,15 @@ export class LoginComponent {
   };
 
   profileForm = new FormGroup({
-    email: new FormControl('', Validators.required),
-    password: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [Validators.required,Validators.email]),
+    password: new FormControl('', [Validators.required]),
   });
 
   constructor(
     private authService: SocialAuthService,
     private auth: AuthenticationService,
-    private router: Router
+    private router: Router,
+    public logedUser:LogedUserService
   ) {}
 
   ngOnInit(): void {
@@ -50,7 +53,7 @@ export class LoginComponent {
         this.auth.login(this.currentUser!).subscribe((x) => {
           localStorage.setItem('token', x);
         });
-        this.router.navigateByUrl('google-login');
+        this.router.navigateByUrl('home');
       }
     });
   }
@@ -59,11 +62,14 @@ export class LoginComponent {
     this.authService
       .signIn(GoogleLoginProvider.PROVIDER_ID, this.googleLoginOptions)
       .then((data) => {
-        console.log(data);
+        if (data) {
+          this.router.navigateByUrl('home');
+        }
       })
       .catch((data) => {
-        this.authService.signOut();
+      
       });
+
   }
   signUp() {
     this.router.navigateByUrl('sign-up');
@@ -76,14 +82,25 @@ export class LoginComponent {
     };
 
     if (user) {
-      console.log(user);
-      this.auth.internalLogin(user).subscribe((x) => {
-        localStorage.setItem('token', x);
-        if (x) {
-          this.router.navigateByUrl('home');
-        }
-      });
+      this.logedUser.user=user.email;
+
+      this.auth.internalLogin(user).subscribe({
+        next:(data)=>
+        {
+          localStorage.setItem('token', data);
+
+
+          if (data) {
+            this.router.navigateByUrl('home');
+          }
+        },
+        error:(error)=>{alert("User not found");}
+      })
+
+
+
     }
+
   }
   googleLoginOptions = {
     scope: 'profile email',

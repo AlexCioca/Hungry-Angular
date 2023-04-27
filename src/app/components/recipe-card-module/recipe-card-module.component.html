@@ -1,0 +1,22 @@
+<div class="card  shadow-lg single-card" style="width: 50vh; height:auto;cursor:pointer;" (click)="openRecipePage(recipe)" >
+  <ng-image-slider [images]="imgCollection"
+  [defaultActiveImage]="0"
+  [showArrow]="false"
+  [imageSize]="{width: '99%', height: 'auto'}"
+  [manageImageRatio]="true"
+  [autoSlide]="5"
+  [infinite]="true"
+  class="card-img-top images-box"></ng-image-slider>
+      <div class="card-body">
+        <h5 class="card-title">{{recipe?.name}}</h5>
+        <p class="card-text">
+          {{recipe?.description}}
+        </p>
+        <p class="card-text">
+          <small class="text-muted">
+            {{recipeUser?.username}}
+          </small>
+        </p>
+      </div>
+
+</div>

@@ -1,0 +1,80 @@
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<app-nav-bar></app-nav-bar>
+<div *ngIf="!newRecipe" class="add-button-div" >
+  <button mat-button class="btn btn-primary change-button" type="submit" (click)=" saveChanges()"> Add Recipe</button>
+</div>
+<div *ngIf="newRecipe" class="add-button-div" >
+  <button mat-button class="btn btn-primary change-button" (click)="updateRecipe()"> Save Changes</button>
+</div>
+<div class="container">
+  <div class="card">
+      <ng-image-slider *ngIf="imgCollection.length!=0" [images]="imgCollection"
+      [defaultActiveImage]="0"
+      [manageImageRatio]="true"
+      [imageSize]="{width: '100%', height: '80%'}"
+       class="card-img-top recipe-images"
+       style="display: block;"></ng-image-slider>
+      <button mat-button (click)="changePhotos()" class="image-button rounded">
+        Manage photos
+      </button>
+      <form [formGroup]="recipeForm">
+    <div class="card-body">
+      <h5 class="card-title">
+        <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+        </div>
+        <input type="text" class="form-control"  formControlName="nameControl" aria-label="Name" aria-describedby="inputGroup-sizing-default">
+      </div></h5>
+      <div *ngIf="recipeForm.controls.nameControl.errors?.['required']  && recipeForm.controls.nameControl.touched">Must be completed</div>
+      <div class="card-text">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Description</span>
+          </div>
+          <input type="text" class="form-control" formControlName="descriptionControl" aria-label="Description" aria-describedby="inputGroup-sizing-default">
+        </div>
+      </div>
+      <div class="lead">Difficulty:
+        <mat-form-field appearance="fill" >
+        <mat-select  formControlName="difficultyControl" >
+          <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty">
+            {{difficulty}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+        </div>
+      <div class="lead" style="display: flex;">Preparation time:
+        <input type="text" class="form-control"  style="display: inline;" formControlName="preparationControl" aria-label="Preparation" style="width:20vh;margin-right: 2vh;">Minutes
+      </div>
+      <div *ngIf="recipeForm.controls.preparationControl.errors?.['pattern']  && recipeForm.controls.preparationControl.touched">Must be a number</div>
+      <div class="lead" style="display: flex;margin-top: 2vh;">Serves:
+        <input type="text" class="form-control"  style="display: inline;" formControlName="servesControl" aria-label="Serves" style="width:20vh;">
+      </div>
+      <div *ngIf="recipeForm.controls.servesControl.errors?.['pattern']  && recipeForm.controls.servesControl.touched">Must be a number</div>
+    </div>
+    <div class="card-footer" *ngIf="owner?.username!">
+      <small class="text-muted">{{recipe?.createdDate | date:'yyyy-MM-dd'}}</small>
+      <small class="text-muted created-by" >Created by: {{owner?.username!}}</small>
+    </div>
+  </form>
+  </div>
+
+ <div>
+    <h1>Ingredients</h1>
+    <div *ngFor="let ingredient of ingredients">
+      <p>{{ingredient.quantity}} {{ingredient.ingredientsName}}</p>
+      <hr class="hr hr-blurry"/>
+    </div>
+ </div>
+ <div>
+  <h1>Steps</h1>
+  <div *ngFor="let step of steps;let index = index">
+    <h4>Step {{index}}</h4>
+    <p>{{step.description}}</p>
+    <hr class="hr hr-blurry" style="height: 5vh;" />
+  </div>
+ </div>
+</div>

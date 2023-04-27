@@ -4,40 +4,33 @@
 		<div class="screen__content">
 			<form class="login" [formGroup]="profileForm">
 				<div class="login__field">
-					<i class="login__icon fas fa-user"></i>
 					<input type="text" class="login__input" placeholder="Email" formControlName="email" required>
 				</div>
         <div *ngIf="profileForm.controls.email.errors?.['required'] && profileForm.controls.email.touched">Must be completed</div>
         <div *ngIf="profileForm.controls.email.errors?.['email'] && profileForm.controls.email.touched">Must be an email</div>
         <div class="login__field">
-					<i class="login__icon fas fa-user"></i>
 					<input type="text" class="login__input" placeholder="Username" formControlName="username">
 				</div>
         <div *ngIf="profileForm.controls.username.errors?.['required'] && profileForm.controls.username.touched">Must be completed</div>
         <div class="login__field">
-					<i class="login__icon fas fa-user"></i>
 					<input type="text" class="login__input" placeholder="First Name" formControlName="firstName">
 				</div>
         <div *ngIf="profileForm.controls.firstName.errors?.['required'] && profileForm.controls.firstName.touched">Must be completed</div>
         <div class="login__field">
-					<i class="login__icon fas fa-user"></i>
 					<input type="text" class="login__input" placeholder="Last Name" formControlName="lastName">
 				</div>
         <div *ngIf="profileForm.controls.lastName.errors?.['required'] && profileForm.controls.lastName.touched">Must be completed</div>
 				<div class="login__field">
-					<i class="login__icon fas fa-lock"></i>
 					<input type="password" class="login__input" placeholder="Password" formControlName="password">
 				</div>
         <div *ngIf="profileForm.controls.password.errors?.['required'] && profileForm.controls.password.touched">Must be completed</div>
         <div class="login__field">
-					<i class="login__icon fas fa-lock"></i>
 					<input type="password" class="login__input" placeholder="Confirm Password" formControlName="confirmPassword">
 				</div>
         <div *ngIf="profileForm.controls.confirmPassword.errors?.['required'] && profileForm.controls.confirmPassword.touched">Must be completed</div>
         <div *ngIf="profileForm.controls.confirmPassword.invalid && profileForm.controls.confirmPassword.touched">Passwords are not the same</div>
 				<button class="button login__submit" type="submit" [disabled]="!profileForm.valid" (click)="signUp()">
 					<span class="button__text">Sign In Now</span>
-					<i class="button__icon fas fa-chevron-right"></i>
 				</button>
 			</form>
 		</div>

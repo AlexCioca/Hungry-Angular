@@ -1,0 +1,24 @@
+
+.middle-icons
+{
+  cursor:pointer;
+  margin-left: 3vh;
+}
+.right-icons{
+  cursor:pointer;
+  margin-right: 4vh;
+}
+.toolbar{
+  display:flex;
+}
+.right-buttons{
+margin-left: auto;
+}
+.user-details{
+  margin:5vh;
+}
+
+.left-buttons{
+  margin-right: auto;
+  visibility: hidden;
+}

@@ -1,0 +1,26 @@
+<app-nav-bar></app-nav-bar>
+
+
+    <div
+      class="search-results"
+      infinite-scroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="100"
+    (scrolled)="onScroll()"
+    [scrollWindow]="true"
+    >
+    <ul *ngFor="let item of items" class="list-group list-group-light group-list">
+      <li class="list-group-item d-flex justify-content-between align-items-center" style="margin-top: 1vh;">
+        <div class="d-flex align-items-center">
+          <img *ngIf="item.photo"  [src]="_sanitizer.bypassSecurityTrustResourceUrl(item?.photo!)" alt="" style="width: 45px; height: 45px"
+            class="rounded-circle" />
+          <div class="ms-3">
+            <p class="fw-bold mb-1">{{item.username}}({{item.firstName}} {{item.lastName}})</p>
+            <p class="text-muted mb-0">{{item.email}}</p>
+          </div>
+        </div>
+        <button class="btn btn-primary follow-button" (click)="addFolower(item.userId)">Follow</button>
+      </li>
+    </ul>
+    </div>
+

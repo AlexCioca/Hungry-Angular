@@ -1,0 +1,16 @@
+.photos{
+  margin:0.5vh;
+  width: 10vh;
+  height: 10vh;
+}
+.image-button{
+  background-color:#006400 ;
+  color:white ;
+  margin-right: 1vh;
+}
+
+.buttons-container{
+  position: absolute;
+  bottom:   0;
+  margin: 2vh ;
+}
