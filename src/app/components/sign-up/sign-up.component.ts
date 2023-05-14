@@ -2,6 +2,7 @@ import { InternalSignUp } from './../../models/intternal-sign-up-dto';
 import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -10,7 +11,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 })
 export class SignUpComponent {
 
-    constructor(private auth: AuthenticationService,private formBuilder:FormBuilder) {}
+    constructor(private auth: AuthenticationService,private formBuilder:FormBuilder, private router: Router) {}
 
 
 
@@ -46,7 +47,9 @@ export class SignUpComponent {
       if(newUser!=null)
       {
          this.auth.internalSignUp(newUser).subscribe();
+         this.router.navigateByUrl('login');
       }
+
 
     }
 

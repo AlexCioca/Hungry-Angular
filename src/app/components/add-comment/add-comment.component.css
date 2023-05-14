@@ -1,0 +1,11 @@
+.container{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top:10vh;
+}
+
+.add-button{
+  background-color: #006400;
+  border-color: #006400;
+}

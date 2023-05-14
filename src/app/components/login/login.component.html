@@ -4,23 +4,19 @@
 		<div class="screen__content">
 			<form class="login" [formGroup]="profileForm">
 				<div class="login__field">
-					<i class="login__icon fas fa-user" ></i>
 					<input type="text" class="login__input" placeholder="Email" formControlName="email">
 				</div>
         <div *ngIf="profileForm.controls.email.errors?.['required'] && profileForm.controls.email.touched">Must be completed</div>
         <div *ngIf="profileForm.controls.email.errors?.['email'] && profileForm.controls.email.touched">Must be an email</div>
 				<div class="login__field">
-					<i class="login__icon fas fa-lock"></i>
 					<input type="password" class="login__input" placeholder="Password" formControlName="password">
 				</div>
         <div *ngIf="profileForm.controls.password.errors?.['required'] && profileForm.controls.password.touched">Must be completed</div>
-				<button class="button login__submit" (click)="internalLogin()">
+				<button class="button login__submit" (click)="internalLogin()" type="submit" [disabled]="!profileForm.valid">
 					<span class="button__text">Log In Now</span>
-					<i class="button__icon fas fa-chevron-right"></i>
 				</button>
         <button class="button login__submit" (click)="signUp()">
 					<span class="button__text">Sign up</span>
-					<i class="button__icon fas fa-chevron-right"></i>
 				</button>
 			</form>
 		</div>

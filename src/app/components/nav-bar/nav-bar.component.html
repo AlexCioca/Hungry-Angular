@@ -1,0 +1,23 @@
+<head>
+  <script src="https://kit.fontawesome.com/4150c7b502.js" crossorigin="anonymous"></script>
+</head>
+<mat-toolbar class="toolbar navbar-item">
+  <div class="left-buttons" >
+    <i class="fa-solid fa-plus fa-xl right-icons" (click)="addANewRecipe()"></i>
+    <i class="fa-solid fa-list fa-lg right-icons" (click)="goToUsersRecipes()"></i>
+    <i class="fa-solid fa-user fa-lg right-icons" aria-hidden="true" (click)="goToProfile()"></i>
+  </div>
+  <div class="middle-buttons">
+  <i class="fa-solid fa-home fa-lg middle-icons" aria-hidden="true" (click)="goHome()"></i>
+  <i class="fa-solid fa-user-group fa-lg middle-icons" (click)="goToPeople()"></i>
+  <i class="fa-solid fa-question fa-lg middle-icons" (click)="goToSurprize()"></i>
+  <i class="fa-sharp fa-solid fa-magnifying-glass fa-lg middle-icons" (click)="goToSearch()"></i>
+  </div>
+  <div class="user-details">{{user?.firstName | uppercase}}</div>
+  <div class="right-buttons" >
+    <i class="fa-solid fa-plus fa-xl right-icons" (click)="addANewRecipe()"></i>
+    <i class="fa-solid fa-heart fa-lg right-icons" aria-hidden="true" (click)="goToLiked()"></i>
+    <i class="fa-solid fa-list fa-lg right-icons" (click)="goToUsersRecipes()"></i>
+    <i class="fa-solid fa-user fa-lg right-icons" aria-hidden="true" (click)="goToProfile()"></i>
+  </div>
+</mat-toolbar>

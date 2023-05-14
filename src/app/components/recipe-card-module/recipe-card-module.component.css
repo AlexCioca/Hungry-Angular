@@ -1,0 +1,25 @@
+  .single-card
+{
+  margin-left: 10vh;
+  margin-top: 5vh;
+
+}
+.images-box{
+padding-top: 0.4vh;
+padding-right: 0.4vh;
+}
+.heart-btn {
+
+
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+
+}
+.username-like-div{
+
+  width:100%;
+}
+.recipe-likes{
+  float:right;
+}

@@ -1,0 +1,9 @@
+.container{
+  margin-top:7vh;
+
+}
+.card-list{
+  display: flex;
+  flex-wrap: wrap;
+}
+

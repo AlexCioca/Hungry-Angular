@@ -1,0 +1,86 @@
+<app-nav-bar></app-nav-bar>
+<div style="margin-top:7vh;">
+<mat-tab-group >
+  <mat-tab label="New People">
+    <div
+      class="search-results"
+      infinite-scroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="100"
+    (scrolled)="onScroll()"
+    [scrollWindow]="true"
+    >
+    <ul *ngFor="let item of items" class="list-group list-group-light group-list">
+      <li class="list-group-item d-flex justify-content-between align-items-center" style="margin-top: 1vh;">
+        <div class="d-flex align-items-center">
+          <img *ngIf="item.photo"  [src]="_sanitizer.bypassSecurityTrustResourceUrl(item?.photo!)" alt="" style="width: 45px; height: 45px"
+            class="rounded-circle" />
+          <div class="ms-3">
+            <p class="fw-bold mb-1">{{item.username}}({{item.firstName}} {{item.lastName}})</p>
+            <p class="text-muted mb-0">{{item.email}}</p>
+          </div>
+        </div>
+        <button class="btn btn-primary follow-button" (click)="addFolower(item.userId)">Follow</button>
+      </li>
+    </ul>
+    </div>
+  </mat-tab>
+
+    <mat-tab label="Followed">
+      <div
+      class="search-results"
+      infinite-scroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="100"
+    (scrolled)="onScrollFollowed()"
+    [scrollWindow]="true"
+    >
+    <ul *ngFor="let item of followed" class="list-group list-group-light group-list">
+      <li class="list-group-item d-flex justify-content-between align-items-center" style="margin-top: 1vh;">
+        <div class="d-flex align-items-center">
+          <img *ngIf="item.photo"  [src]="_sanitizer.bypassSecurityTrustResourceUrl(item?.photo!)" alt="" style="width: 45px; height: 45px"
+            class="rounded-circle" />
+          <div class="ms-3">
+            <p class="fw-bold mb-1">{{item.username}}({{item.firstName}} {{item.lastName}})</p>
+            <p class="text-muted mb-0">{{item.email}}</p>
+          </div>
+        </div>
+        <button class="btn btn-primary follow-button" (click)="removeFollow(item.userId)">Unfollow</button>
+      </li>
+    </ul>
+    </div>
+    </mat-tab>
+
+    <mat-tab label="Search People">
+      <div class="container">
+        <form>
+        <div class="row height d-flex justify-content-center align-items-center">
+          <div class="col-md-18">
+            <div class="form">
+              <i class="fa fa-search"></i>
+              <input type="text" class="form-control form-input" placeholder="Search anything..."  [formControl]="peopleControl">
+              <button type="submit" (click)="searchUser()" class="search-button rounded btn btn-primary btn-floating"> Search</button>
+            </div>
+            <ul *ngFor="let item of searchResult" class="list-group list-group-light group-list">
+              <li class="list-group-item d-flex justify-content-between align-items-center" style="margin-top: 1vh;">
+                <div class="d-flex align-items-center">
+                  <img *ngIf="item.photo"  [src]="_sanitizer.bypassSecurityTrustResourceUrl(item?.photo!)" alt="" style="width: 45px; height: 45px"
+                    class="rounded-circle" />
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{item.username}}({{item.firstName}} {{item.lastName}})</p>
+                    <p class="text-muted mb-0">{{item.email}}</p>
+                  </div>
+                </div>
+                <button  *ngIf="checkFollow(item);else elseBlock" class="btn btn-primary follow-button" (click)="removeFollow(item.userId)">Unfollow</button>
+              <ng-template #elseBlock>
+                <button class="btn btn-primary follow-button" (click)="addFolower(item.userId)">Follow</button>
+              </ng-template>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </form>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

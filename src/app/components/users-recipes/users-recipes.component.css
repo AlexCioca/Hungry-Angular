@@ -1,0 +1,25 @@
+.card-list{
+  display: flex;
+  flex-wrap: wrap;
+  margin-top:7vh;
+}
+
+.change-button{
+  margin-top: 1vh;
+  background-color: #006400;
+  border-color: #006400;
+  margin-left:30vh ;
+}
+.add-button
+{
+  background-color: #006400;
+  border-color: #006400;
+  color: white;
+  margin-top: 1vh;
+
+}
+.upper-buttons{
+ width: 100%;
+ display: flex;
+ justify-content: center;
+}

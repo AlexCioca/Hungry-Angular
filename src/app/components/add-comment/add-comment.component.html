@@ -1,0 +1,18 @@
+<div class="container">
+  <textarea name="text" cols="40" rows="5"  [(ngModel)]="review.comment"></textarea>
+  <ngb-rating
+    [(rate)]="this.review.rating"
+    [readonly]="readonly"
+  ></ngb-rating>
+  <pre>
+  Selected: <b>{{this.review.rating}}</b>
+  </pre>
+  <button
+    mat-button
+    class="btn btn-primary add-button"
+    type="submit"
+    (click)="addComment()"
+  >
+    Add Comment
+  </button>
+</div>

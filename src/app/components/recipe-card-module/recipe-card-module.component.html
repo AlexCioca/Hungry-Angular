@@ -1,0 +1,43 @@
+<div
+  class="card shadow-lg single-card"
+  style="width: 50vh; height: auto; cursor: pointer"
+  (click)="openRecipePage(recipe)"
+>
+  <ng-image-slider
+    [images]="imgCollection"
+    [defaultActiveImage]="0"
+    [showArrow]="false"
+    [imageSize]="{ width: '99%', height: 'auto' }"
+    [manageImageRatio]="true"
+    [autoSlide]="5"
+    [infinite]="true"
+    class="card-img-top images-box"
+  ></ng-image-slider>
+  <div class="card-body">
+    <h5 class="card-title">{{ recipe?.name }}</h5>
+    <p class="card-text">
+      {{ recipe?.description }}
+    </p>
+    <p class="card-text" *ngIf="recipeRating != 0">
+      {{ recipeRating | number : "1.2-2" }} <i class="fa fa-star"></i>
+    </p>
+    <div class="card-text username-like-div">
+      <small class="text-muted">
+        {{ recipeUser?.username }}
+      </small>
+      <div class="recipe-likes">
+      <i *ngIf="!isRecipeLiked"
+        class="fa-regular fa-heart heart-btn fa-xl"
+        style="color: #006400"
+        (click)="newLike($event)"
+      ></i>
+      <i *ngIf="isRecipeLiked"
+        class="fa-solid fa-heart heart-btn fa-xl"
+        style="color: #006400"
+        (click)="deleteLike($event)"
+      ></i>
+      {{recipeLikes}}
+    </div>
+    </div>
+  </div>
+</div>
