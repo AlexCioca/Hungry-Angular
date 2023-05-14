@@ -1,6 +1,7 @@
 .container{
   margin-left: auto;
   margin-right: auto;
+
 }
 
 .recipe-images{
@@ -22,6 +23,7 @@
   margin-right: auto;
   margin-top:1vh;
   background-color:#006400;
+  border-color: #006400;
   color:white;
 }
 .change-button{
@@ -34,4 +36,19 @@
   width: 100%;
   display: flex;
   justify-content: center;
+}
+.add-button
+{
+  margin-top: 1.5vh;
+  margin-left: 2vh;
+  height: 5vh;
+  background-color: #006400;
+  border-color: #006400;
+}
+
+.delete-button
+{
+  margin-top:1.7vh;
+  margin-left: auto;
+  cursor:pointer;
 }

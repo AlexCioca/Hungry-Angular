@@ -2,6 +2,7 @@
 
 width:40vh;
 height:40vh;
+margin-top: 2vh;
 
 }
 .main-container{
@@ -9,6 +10,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 flex-direction: column;
+margin-top:6vh;
 }
 .profile-form{
   flex-direction: row;
@@ -20,7 +22,7 @@ flex-direction: column;
 .save-button{
 
   margin-top: 1vh;
-  margin-left: 30vh;
+  margin-left: 25vh;
   background-color: #006400;
   border-color: #006400;
 }
@@ -32,4 +34,11 @@ flex-direction: column;
   margin-top: 1vh;
   background-color: #006400;
   border-color: #006400;
+}
+.logout-button{
+  margin-top: 1vh;
+  margin-right: auto;
+  background-color: #006400;
+  border-color: #006400;
+  margin-left:2vh;
 }

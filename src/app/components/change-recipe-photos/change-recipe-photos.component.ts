@@ -20,6 +20,7 @@ export class ChangeRecipePhotosComponent {
     private recipePageService: RecipePageService,
     public dialogRef: MatDialogRef<any>
   ) {
+
     this.recipePageService
       .getRecipePhotos(this.data.id)
       .subscribe((x) => (this.photos = x));

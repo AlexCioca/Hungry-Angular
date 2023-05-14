@@ -1,3 +1,4 @@
+import { ICategory } from './../../models/category';
 import { IRecipeReview } from '../../models/recipe-review';
 import { IIngredients } from './../../models/ingredient';
 import { IUser } from './../../models/user';
@@ -14,6 +15,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { IRecipeSteps } from 'src/app/models/recipe-steps';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
+import { AddCommentComponent } from '../add-comment/add-comment.component';
 
 @Component({
   selector: 'app-recipe-page',
@@ -29,16 +31,20 @@ export class RecipePageComponent {
   ingredients: IIngredients[] = [];
   steps: IRecipeSteps[] = [];
   reviews: IRecipeReview[] = [];
+  userReview: any[] = [];
+  currentUser?:IUser;
+  category?:ICategory;
 
   constructor(
     private activatedRouter: ActivatedRoute,
     private recipePageService: RecipePageService,
     public _sanitizer: DomSanitizer,
     private userService: UserService,
-    config: NgbRatingConfig
+    config: NgbRatingConfig,
+    public dialogRef:MatDialog
   ) {
     config.max = 5;
-		config.readonly = true;
+    config.readonly = true;
     if (parseInt(this.activatedRouter.snapshot.paramMap.get('id')!)) {
       recipePageService
         .getRecipeById(
@@ -50,7 +56,6 @@ export class RecipePageComponent {
             .getUserById(this.recipe?.userId!)
             .subscribe((data) => {
               this.owner = data;
-
             });
           this.recipePageService
             .getRecipeIngredients(this.recipe?.recipeId!)
@@ -60,9 +65,19 @@ export class RecipePageComponent {
             .subscribe((data) => (this.steps = data));
           this.recipePageService
             .getRecipeReviews(this.recipe?.recipeId!)
-            .subscribe((data) => (this.reviews = data));
+            .subscribe((data) => {
+              this.reviews = data;
+              data.forEach((element) => {
+                this.userService
+                  .getUserById(element.userId)
+                  .subscribe((data) => {
+                    this.userReview.push(Object.assign(element, data));
+
+                  });
+              });
+            });
         });
-        this.recipePageService
+      this.recipePageService
         .getRecipePhotos(
           parseInt(this.activatedRouter.snapshot.paramMap.get('id')!)
         )
@@ -76,10 +91,44 @@ export class RecipePageComponent {
             });
           });
         });
-     
     }
   }
   ngOnInit(): void {
+
+    this.userService.getUserByToken().subscribe(data=>this.currentUser=data)
+    this.recipePageService
+    .getRecipeCategory(parseInt(this.activatedRouter.snapshot.paramMap.get('id')!))
+    .subscribe((data) => {
+      this.category = data;
+      console.log(data);
+    });
+
+  }
+
+  addComment()
+  {
+    let recipeId = parseInt(this.activatedRouter.snapshot.paramMap.get('id')!);
+    const commentDialogConfig = new MatDialogConfig();
+
+    commentDialogConfig.autoFocus = true;
+    commentDialogConfig.width = '50%';
+    commentDialogConfig.height = '50%';
+    commentDialogConfig.data = {
+      recipeId
+    };
+    const dialog = this.dialogRef.open(
+      AddCommentComponent,
+      commentDialogConfig
+    );
+
+    dialog.afterClosed().subscribe((data) => {
+     this.userReview.push(data.data);
+    });
+  }
+  deleteComment(review:IRecipeReview)
+  {
+    this.recipePageService.deleteReview(review).subscribe();
+    this.userReview.splice(this.reviews.indexOf(review),1);
 
   }
 }

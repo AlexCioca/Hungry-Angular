@@ -1,3 +1,6 @@
+import { SurpriseRecipesComponent } from './components/surprise-recipes/surprise-recipes.component';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { LikedRecipesComponent } from './components/liked-recipes/liked-recipes.component';
 import { SearchComponent } from './components/search/search.component';
 import { UsersRecipesComponent } from './components/users-recipes/users-recipes.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -23,7 +26,10 @@ const routes:Routes=[
   {path:"recipe-page/:id", component:RecipePageComponent,pathMatch:'full',canActivate:[AuthGuardService]},
   {path:"search-page",component:SearchComponent,pathMatch:'full',canActivate:[AuthGuardService]},
   {path:"profile",component:ProfileComponent,pathMatch:'full',canActivate:[AuthGuardService]},
+  {path:"surprize-recipes",component:SurpriseRecipesComponent,pathMatch:'full',canActivate:[AuthGuardService]},
+  {path:"unauthorized",component:UnauthorizedComponent,pathMatch:'full',canActivate:[AuthGuardService]},
   {path:"people",component:PeopleComponent,pathMatch:'full',canActivate:[AuthGuardService]},
+  {path:'liked-recipes',component:LikedRecipesComponent,pathMatch:'full', canActivate:[AuthGuardService]},
   {path:'login',component:LoginComponent,pathMatch:'full'},
   {path:"sign-up", component:SignUpComponent,pathMatch:'full'},
   {path: '',redirectTo:'home' , pathMatch: 'full'}

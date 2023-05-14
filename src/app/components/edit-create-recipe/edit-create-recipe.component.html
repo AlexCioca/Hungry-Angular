@@ -2,10 +2,10 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <app-nav-bar></app-nav-bar>
-<div *ngIf="!newRecipe" class="add-button-div" >
+<div *ngIf="!newRecipe" class="add-button-div"  style="margin-top:7vh;">
   <button mat-button class="btn btn-primary change-button" type="submit" (click)=" saveChanges()"> Add Recipe</button>
 </div>
-<div *ngIf="newRecipe" class="add-button-div" >
+<div *ngIf="newRecipe" class="add-button-div" style="margin-top:7vh;">
   <button mat-button class="btn btn-primary change-button" (click)="updateRecipe()"> Save Changes</button>
 </div>
 <div class="container">
@@ -16,7 +16,7 @@
       [imageSize]="{width: '100%', height: '80%'}"
        class="card-img-top recipe-images"
        style="display: block;"></ng-image-slider>
-      <button mat-button (click)="changePhotos()" class="image-button rounded">
+      <button mat-button (click)="changePhotos()" class="image-button rounded btn btn-primary btn-floating">
         Manage photos
       </button>
       <form [formGroup]="recipeForm">
@@ -55,6 +55,16 @@
       </div>
       <div *ngIf="recipeForm.controls.servesControl.errors?.['pattern']  && recipeForm.controls.servesControl.touched">Must be a number</div>
     </div>
+    <div class="lead" style="margin-left: 3vh;">Category:
+    <mat-form-field appearance="fill" >
+    <mat-select [(ngModel)]="category" [ngModelOptions]="{standalone: true}" [placeholder]="category?.name!">
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let cat of categories" [value]="cat">
+        {{cat.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
     <div class="card-footer" *ngIf="owner?.username!">
       <small class="text-muted">{{recipe?.createdDate | date:'yyyy-MM-dd'}}</small>
       <small class="text-muted created-by" >Created by: {{owner?.username!}}</small>
@@ -63,18 +73,34 @@
   </div>
 
  <div>
-    <h1>Ingredients</h1>
+    <div style="display: flex;">
+      <h1>Ingredients </h1>
+      <button type="button" class="btn btn-primary btn-floating add-button" (click)="addIngredient()">
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
     <div *ngFor="let ingredient of ingredients">
-      <p>{{ingredient.quantity}} {{ingredient.ingredientsName}}</p>
+      <div style="display: flex;">
+      <p>{{ingredient.quantity}} {{ingredient.measurement}} {{ingredient.ingredientsName}}</p>
+      <i class="fas fa-trash fa-xs delete-button" (click)="deleteIngredient(ingredient)"></i>
+      </div>
       <hr class="hr hr-blurry"/>
     </div>
  </div>
  <div>
-  <h1>Steps</h1>
+  <div style="display: flex;">
+    <h1>Steps</h1>
+    <button type="button" class="btn btn-primary btn-floating add-button" (click)="addStep()">
+     <i class="fas fa-plus" ></i>
+    </button>
+  </div>
   <div *ngFor="let step of steps;let index = index">
-    <h4>Step {{index}}</h4>
+    <h4>Step {{index+1}}</h4>
+    <div style="display: flex;">
     <p>{{step.description}}</p>
-    <hr class="hr hr-blurry" style="height: 5vh;" />
+      <i class="fas fa-trash fa-xs delete-button" (click)="deleteStep(step)"></i>
+    </div>
+    <hr class="hr hr-blurry"  />
   </div>
  </div>
 </div>

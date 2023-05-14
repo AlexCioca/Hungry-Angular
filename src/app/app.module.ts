@@ -37,6 +37,13 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
+import {MatTabsModule} from '@angular/material/tabs';
+import { AddIngredientsComponent } from './components/add-ingredients/add-ingredients.component';
+import { AddCommentComponent } from './components/add-comment/add-comment.component';
+import { AddStepComponent } from './components/add-step/add-step.component';
+import { LikedRecipesComponent } from './components/liked-recipes/liked-recipes.component';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { SurpriseRecipesComponent } from './components/surprise-recipes/surprise-recipes.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -58,7 +65,13 @@ export function tokenGetter() {
     ProfileComponent,
     PeopleComponent,
     UsersRecipesComponent,
-    SearchComponent
+    SearchComponent,
+    AddIngredientsComponent,
+    AddCommentComponent,
+    AddStepComponent,
+    LikedRecipesComponent,
+    UnauthorizedComponent,
+    SurpriseRecipesComponent
   ],
   imports: [
     BrowserModule,
@@ -75,6 +88,7 @@ export function tokenGetter() {
     NgbModule,
     NgImageSliderModule,
     AppRoutingModule,
+    MatTabsModule,
     ReactiveFormsModule,
     MdbCarouselModule,
     MatToolbarModule,

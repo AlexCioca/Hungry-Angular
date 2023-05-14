@@ -16,9 +16,9 @@ export class UserService {
   return this.http.get<IUser>(`${this.endpoint}/User/GetUserById/`+id);
  }
 
- getUserByToken(token:string)
+ getUserByToken()
  {
-  return this.http.get<IUser>(`${this.endpoint}/User/GetUserByToken/`+token);
+  return this.http.get<IUser>(`${this.endpoint}/User/GetUserByToken`);
  }
 
  getUserByUsername(username:string)
@@ -29,10 +29,19 @@ export class UserService {
  {
   return this.http.put<IUser>(`${this.endpoint}/User/UpdateUser`,user);
  }
- getPeopleForFollow(number:number,userId:number)
+ getPeopleForFollow(number:number)
  {
 
-  return this.http.get<IUser[]>(`${this.endpoint}/User/GetNewUsers?number=`+number +`&userId=`+userId);
+  return this.http.get<IUser[]>(`${this.endpoint}/User/GetNewUsers?number=`+ number);
+ }
+ getFollowers(number:number)
+ {
+
+  return this.http.get<IUser[]>(`${this.endpoint}/User/GetFollowed?number=`+ number);
  }
 
+ searchUserByUsername(username:string)
+ {
+  return this.http.get<IUser[]>(`${this.endpoint}/User/SearchPeopleByUsername?username=`+ username);
+ }
 }

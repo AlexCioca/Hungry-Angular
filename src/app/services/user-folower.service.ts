@@ -11,10 +11,13 @@ export class UserFolowerService {
 
   constructor(private http:HttpClient) { }
 
-   addNewFollow(userId:number,followerId:number)
+   addNewFollow(followerId:number)
   {
 
-    return this.http.post<IUserFollower>(`${this.endpoint}/UserFollower/AddFolower?userId=`+userId+`&followerId=`+followerId,{});
+    return this.http.post<IUserFollower>(`${this.endpoint}/UserFollower/AddFolower?followerId=`+followerId,{});
   }
-
+  removeFollowed(followedId:number)
+  {
+    return this.http.delete<IUserFollower>(`${this.endpoint}/UserFollower/RemoveFollowed?followedId=`+followedId,{});
+  }
 }

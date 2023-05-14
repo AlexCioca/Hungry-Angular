@@ -19,4 +19,16 @@ export class RecipeCardService {
   {
     return this.http.get<IRecipeImages[]>(`${this.endpoint}/Recipe/GetImagesForRecipe?id=`+id);
   }
+  getRecipeRating(id:number)
+  {
+    return this.http.get<number>(`${this.endpoint}/Recipe/GetReviewRating?recipeId=`+id);
+  }
+  getLikedRecipesForUser()
+  {
+    return this.http.get<number>(`${this.endpoint}/Recipe/GetLikedRecipesForUser`);
+  }
+  getIfRecipeIsLiked(recipeId:number)
+  {
+    return this.http.get<boolean>(`${this.endpoint}/UserRecipe/GetIfRecipeIsLiked?recipeId=`+recipeId);
+  }
 }

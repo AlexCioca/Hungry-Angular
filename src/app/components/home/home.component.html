@@ -1,6 +1,17 @@
 <app-nav-bar></app-nav-bar>
+
+<div style="margin-top: 6vh;">
+<div
+      class="search-results"
+      infinite-scroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="100"
+    (scrolled)="onScroll()"
+    [scrollWindow]="true"
+    >
 <div class="card-list">
   <div *ngFor="let recipe of recipeList">
     <app-recipe-card-module class="single-card" [recipe]="recipe"></app-recipe-card-module>
   </div>
+</div>
 </div>

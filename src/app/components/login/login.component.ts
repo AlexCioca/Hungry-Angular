@@ -67,7 +67,7 @@ export class LoginComponent {
         }
       })
       .catch((data) => {
-      
+
       });
 
   }

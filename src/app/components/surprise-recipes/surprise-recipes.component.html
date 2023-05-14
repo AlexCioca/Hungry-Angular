@@ -1,0 +1,59 @@
+<app-nav-bar></app-nav-bar>
+<div class="container">
+<mat-tab-group>
+  <mat-tab label="Most liked recipes">
+    <div style="margin-top: 6vh;">
+      <div
+            class="search-results"
+            infinite-scroll
+          [infiniteScrollDistance]="2"
+          [infiniteScrollThrottle]="100"
+          [scrollWindow]="true"
+          >
+      <div class="card-list">
+        <div *ngFor="let recipe of mostLikedRecipes">
+          <app-recipe-card-module class="single-card" [recipe]="recipe"></app-recipe-card-module>
+        </div>
+      </div>
+      </div>
+      </div>
+  </mat-tab>
+
+  <mat-tab label="Recipes with the best reviews">
+    <div style="margin-top: 6vh;">
+      <div
+            class="search-results"
+            infinite-scroll
+          [infiniteScrollDistance]="2"
+          [infiniteScrollThrottle]="100"
+          [scrollWindow]="true"
+          >
+      <div class="card-list">
+        <div *ngFor="let recipe of topRatedRecipes">
+          <app-recipe-card-module class="single-card" [recipe]="recipe"></app-recipe-card-module>
+        </div>
+      </div>
+      </div>
+      </div>
+
+  </mat-tab>
+
+  <mat-tab label="For you">
+    <div style="margin-top: 6vh;">
+      <div
+            class="search-results"
+            infinite-scroll
+          [infiniteScrollDistance]="2"
+          [infiniteScrollThrottle]="100"
+          [scrollWindow]="true"
+          >
+      <div class="card-list">
+        <div *ngFor="let recipe of recomandedRecipes">
+          <app-recipe-card-module class="single-card" [recipe]="recipe"></app-recipe-card-module>
+        </div>
+      </div>
+      </div>
+      </div>
+  </mat-tab>
+</mat-tab-group>
+</div>

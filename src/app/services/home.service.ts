@@ -13,5 +13,13 @@ export class HomeService {
   {
     return this.http.get<IRecipe[]>(`${this.endpoint}/Recipe/GetAllRecipes`);
   }
+  getFollowedRecipes( number:number)
+  {
+    return this.http.get<IRecipe[]>(`${this.endpoint}/Recipe/GetFollowedRecipes?number=`+number);
+  }
+  getLikedRecipes(){
+    return this.http.get<IRecipe[]>(`${this.endpoint}/Recipe/GetLikedRecipesForUser`);
+  }
+
 
 }

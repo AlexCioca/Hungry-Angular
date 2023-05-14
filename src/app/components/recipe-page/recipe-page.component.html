@@ -15,6 +15,7 @@
       <p class="card-text">
         {{recipe?.description}}
       </p>
+      <p class="lead">Category: {{category?.name}}</p>
       <p class="lead">Difficulty: {{recipe?.difficulty}}</p>
       <p class="lead">Preparation time: {{recipe?.preparationTime}} Minutes</p>
       <p class="lead">Serves: {{recipe?.serves}}</p>
@@ -28,7 +29,7 @@
  <div>
     <h1 *ngIf="ingredients">Ingredients</h1>
     <div *ngFor="let ingredient of ingredients">
-      <p>{{ingredient.quantity}} {{ingredient.ingredientsName}}</p>
+      <p>{{ingredient.quantity}} {{ingredient.measurement}} {{ingredient.ingredientsName}}</p>
       <hr class="hr hr-blurry"/>
     </div>
  </div>
@@ -41,9 +42,11 @@
   </div>
   <div>
   <h1 *ngIf="reviews">Comments</h1>
-    <div *ngFor="let review of reviews">
+  <button (click)="addComment()" class="rounded btn btn-primary btn-floating add-comment-button"> Add a comment</button>
+    <div *ngFor="let review of userReview">
       <ngb-rating [rate]="review.rating" ></ngb-rating>
       <p>{{review.comment}}</p>
+      <p>By : {{review.username}} <i *ngIf="currentUser!.userId==review.userId" (click)="deleteComment(review)" class="fas fa-trash fa-xs delete-button" style="margin-left:1vh; cursor:pointer;"></i></p>
       <hr class="hr hr-blurry"/>
     </div>
   </div>

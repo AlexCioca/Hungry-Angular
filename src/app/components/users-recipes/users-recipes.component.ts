@@ -19,7 +19,7 @@ export class UsersRecipesComponent {
 
 
   ngOnInit(): void {
-    this.userService.getUserByToken(localStorage.getItem('token')!).subscribe(data=>{
+    this.userService.getUserByToken().subscribe(data=>{
     this.userRecipeService.getRecipesForUser(data.userId).subscribe(data=>{this.recipeList=data;
     });
   })

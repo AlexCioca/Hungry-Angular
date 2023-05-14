@@ -6,6 +6,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { IRecipeImages } from 'src/app/models/recipe-image';
 import { ImageEncode } from 'src/app/utils/image-encoder';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +17,7 @@ export class ProfileComponent {
 
   user?:IUser;
 
-  constructor(private logedUser:LogedUserService,private userService:UserService, public _sanitizer: DomSanitizer) {
+  constructor(private logedUser:LogedUserService,private userService:UserService, public _sanitizer: DomSanitizer,private router:Router) {
   }
   profileForm = new FormGroup({
     username: new FormControl('',),
@@ -26,7 +27,7 @@ export class ProfileComponent {
   });
   ngOnInit(): void {
 
-    this.userService.getUserByToken(localStorage.getItem('token')!).subscribe(data=>{
+    this.userService.getUserByToken().subscribe(data=>{
 
       this.user=data;
       this.profileForm.controls['firstName'].setValue(data.firstName!);
@@ -49,6 +50,13 @@ export class ProfileComponent {
   async upload(event: any) {
     let imageCode = await ImageEncode.fileToByteArray(event.target.files[0]);
     this.user!.photo=imageCode as string;
+
+  }
+
+  logout()
+  {
+    localStorage.removeItem("token");
+    this.router.navigateByUrl("/login");
 
   }
 }

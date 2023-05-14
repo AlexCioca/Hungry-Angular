@@ -1,0 +1,29 @@
+
+<form [formGroup]="ingredientsForm" class="container">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Ingredient name</mat-label>
+    <input type="text"
+           matInput
+           class="search-box"
+           formControlName="nameControl"
+           >
+  </mat-form-field>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Quantity</mat-label>
+    <input type="text"
+           matInput
+           class="search-box"
+           formControlName="quantityControl"
+           >
+  </mat-form-field>
+
+    <mat-label>Measurement</mat-label>
+    <mat-select [(ngModel)]="measure" [ngModelOptions]="{standalone: true}">
+
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let measurement of measurements" [value]="measurement">
+        {{measurement}}
+      </mat-option>
+    </mat-select>
+  <button mat-button class="btn btn-primary add-button" type="submit" (click)="addIngredient()" > Add Ingredient</button>
+</form>

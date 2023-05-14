@@ -38,4 +38,12 @@ export class NavBarComponent {
   {
     this.router.navigateByUrl('edit-create-recipe');
   }
+  goToLiked()
+  {
+    this.router.navigateByUrl('liked-recipes');
+  }
+  goToSurprize()
+  {
+    this.router.navigateByUrl('surprize-recipes');
+  }
 }

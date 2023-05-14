@@ -1,3 +1,4 @@
+import { FormControl } from '@angular/forms';
 import { UserFolowerService } from './../../services/user-folower.service';
 import { IUser } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
@@ -10,46 +11,83 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./people.component.css'],
 })
 export class PeopleComponent {
-  items?: Array<IUser>=Array();
-  number:number=0;
-  constructor(private userService: UserService,public _sanitizer: DomSanitizer, private userFollowerService:UserFolowerService) {
-    this.userService
-    .getUserByToken(localStorage.getItem('token')!)
-    .subscribe((data) => {
-      this.userService.getPeopleForFollow(0, data.userId).subscribe(users=>
-        {
-          this.items=users;
-          this.number+=15;
-        });
+  items?: Array<IUser> = Array();
+  number: number = 0;
+  followed?: Array<IUser> = [];
+  numberFollowed: number = 0;
+  searchResult?: Array<IUser> = [];
+  peopleControl = new FormControl('');
+
+  constructor(
+    private userService: UserService,
+    public _sanitizer: DomSanitizer,
+    private userFollowerService: UserFolowerService
+  ) {
+    this.userService.getPeopleForFollow(0).subscribe((users) => {
+      if (users) {
+        this.items = users;
+        this.number += 15;
+      }
+    });
+
+    this.userService.getFollowers(0).subscribe((users) => {
+      if (users) {
+        this.followed = users;
+        this.numberFollowed += 15;
+      }
     });
   }
   onScroll() {
+    this.userService.getPeopleForFollow(this.number).subscribe((users) => {
+      if (users) {
+        for (var i = 0; i < users.length; i++) {
+          this.items?.push(users[i]);
+        }
+        this.number += 15;
+      }
+    });
+  }
+
+  onScrollFollowed() {
+    this.userService.getFollowers(this.numberFollowed).subscribe((users) => {
+      if (users) {
+        for (var i = 0; i < users.length; i++) {
+          this.followed?.push(users[i]);
+        }
+        this.numberFollowed += 15;
+      }
+    });
+  }
+
+  addFolower(id: number) {
+    this.userFollowerService.addNewFollow(id).subscribe();
+    let user = this.items?.find((x) => x.userId == id);
+    this.items?.splice(this.items.indexOf(user!), 1);
+    this.followed?.push(user!);
+  }
+
+  removeFollow(followedId: number) {
+    this.userFollowerService.removeFollowed(followedId).subscribe();
+    let follow = this.followed?.find((x) => x.userId == followedId);
+    this.followed?.splice(this.followed.indexOf(follow!), 1);
+    this.items?.push(follow!);
+  }
+
+  searchUser() {
+    this.searchResult = [];
     this.userService
-    .getUserByToken(localStorage.getItem('token')!)
-    .subscribe((data) => {
-      this.userService.getPeopleForFollow(this.number, data.userId).subscribe(users=>
-        {
-          for(var i = 0; i<users.length;i++)
-          {
-            this.items?.push(users[i]);
-          }
-          this.number+=15;
+      .searchUserByUsername(this.peopleControl.value!)
+      .subscribe((data) => {
+        data.forEach((element) => {
+          this.searchResult?.push(element);
         });
-    });
-
-
+      });
   }
 
-  addFolower(id:number)
-  {
-
-    this.userService
-    .getUserByToken(localStorage.getItem('token')!)
-    .subscribe((data) => {
-      this.userFollowerService.addNewFollow(id,data.userId).subscribe();
-      let user=this.items?.find(x=>x.userId==id);
-      this.items?.splice(this.items.indexOf(user!),1);
-    });
+  checkFollow(user: IUser): boolean | undefined {
+    let nr = this.followed?.find((x) => x.userId == user.userId);
+    if (nr) {
+      return true;
+    } else return false;
   }
-
 }

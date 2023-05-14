@@ -5,6 +5,7 @@ import { IRecipe } from './../models/recipe';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IRecipeReview } from '../models/recipe-review';
+import { ICategory } from '../models/category';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +41,6 @@ export class RecipePageService {
   getRecipeSteps(id:number){
     return this.http.get<IRecipeSteps[]>(`${this.endpoint}/Recipe/GetStepsForRecipe?id=`+id);
   }
-
   deletePhoto(id:number)
   {
     return this.http.delete<IRecipeImages>(`${this.endpoint}/Recipe/DeletePhotoForRecipe?id=`+id);
@@ -48,5 +48,54 @@ export class RecipePageService {
   addRecipe(recipe:IRecipe)
   {
     return this.http.post<IRecipe>(`${this.endpoint}/Recipe/AddRecipe`,recipe);
+  }
+  addIngredient(ingredient:IIngredients)
+  {
+    return this.http.post<IIngredients>(`${this.endpoint}/Recipe/AddIngredient`,ingredient);
+  }
+
+  addReview(review:IRecipeReview)
+  {
+    return this.http.post<IRecipeReview>(`${this.endpoint}/Recipe/AddReview`,review);
+  }
+  addStep(step:IRecipeSteps)
+  {
+    return this.http.post<IRecipeSteps>(`${this.endpoint}/Recipe/AddStep`,step);
+  }
+  deleteIngredient(ingredient:IIngredients)
+  {
+    return this.http.delete<IIngredients>(`${this.endpoint}/Recipe/DeleteIngredient`,{body:ingredient});
+  }
+  deleteStep(step:IRecipeSteps)
+  {
+    return this.http.delete<IRecipeSteps>(`${this.endpoint}/Recipe/DeleteStep`,{body:step});
+  }
+  deleteReview(review:IRecipeReview)
+  {
+    return this.http.delete<IRecipeReview>(`${this.endpoint}/Recipe/DeleteReview`,{body:review});
+  }
+  getRecipeCategory(recipeId:number)
+  {
+    return this.http.get<ICategory>(`${this.endpoint}/Recipe/GetRecipeCategory?recipeId=`+recipeId);
+  }
+  updateRecipeCategory(recipeId:number, categoryId:number)
+  {
+    return this.http.put<ICategory>(`${this.endpoint}/RecipeCategory/UpdateRecipeCategory?recipeId=`+ recipeId +`&categoryId=`+categoryId,{});
+  }
+  addRecipeCategory(recipeId:number, categoryId:number)
+  {
+    return this.http.post<ICategory>(`${this.endpoint}/RecipeCategory/AddRecipeCategory?recipeId=`+ recipeId +`&categoryId=`+categoryId,{});
+  }
+  getMostLikedRecipes()
+  {
+    return this.http.get<IRecipe[]>(`${this.endpoint}/Recipe/GetMostLikedRecipes`);
+  }
+  getRecomendedRecipes()
+  {
+    return this.http.get<IRecipe[]>(`${this.endpoint}/Recipe/GetRecomandedRecipes`);
+  }
+  getTopRatedRecipes()
+  {
+    return this.http.get<IRecipe[]>(`${this.endpoint}/Recipe/GetTopRatedRecipes`);
   }
 }
