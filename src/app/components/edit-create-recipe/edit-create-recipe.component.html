@@ -8,17 +8,16 @@
 <div *ngIf="newRecipe" class="add-button-div" style="margin-top:7vh;">
   <button mat-button class="btn btn-primary change-button" (click)="updateRecipe()"> Save Changes</button>
 </div>
+
 <div class="container">
+  <div *ngIf="newRecipe" class="add-button-div" style="margin-top:7vh;">
+    <button mat-button class="btn btn-primary change-button" (click)="file.click()">
+      <input type="file" id="file" (change)="changeMainPhoto($event)" accept="image/*" #file  style="display:none;"/>
+      Change Main Photo</button>
+  </div>
   <div class="card">
-      <ng-image-slider *ngIf="imgCollection.length!=0" [images]="imgCollection"
-      [defaultActiveImage]="0"
-      [manageImageRatio]="true"
-      [imageSize]="{width: '100%', height: '80%'}"
-       class="card-img-top recipe-images"
-       style="display: block;"></ng-image-slider>
-      <button mat-button (click)="changePhotos()" class="image-button rounded btn btn-primary btn-floating">
-        Manage photos
-      </button>
+       <img *ngIf="recipe?.mainPhoto" [src]="recipe?.mainPhoto"  class="card-img-top recipe-images">
+
       <form [formGroup]="recipeForm">
     <div class="card-body">
       <h5 class="card-title">
@@ -71,36 +70,53 @@
     </div>
   </form>
   </div>
-
- <div>
-    <div style="display: flex;">
-      <h1>Ingredients </h1>
-      <button type="button" class="btn btn-primary btn-floating add-button" (click)="addIngredient()">
-        <i class="fas fa-plus"></i>
-      </button>
-    </div>
-    <div *ngFor="let ingredient of ingredients">
+ <mat-tab-group>
+  <mat-tab label="Ingredients">
+    <div>
       <div style="display: flex;">
-      <p>{{ingredient.quantity}} {{ingredient.measurement}} {{ingredient.ingredientsName}}</p>
-      <i class="fas fa-trash fa-xs delete-button" (click)="deleteIngredient(ingredient)"></i>
+        <button type="button" class="btn btn-primary btn-floating add-button" (click)="addIngredient()">
+          <i class="fas fa-plus"></i>
+        </button>
       </div>
-      <hr class="hr hr-blurry"/>
-    </div>
- </div>
- <div>
-  <div style="display: flex;">
-    <h1>Steps</h1>
-    <button type="button" class="btn btn-primary btn-floating add-button" (click)="addStep()">
-     <i class="fas fa-plus" ></i>
+      <div *ngFor="let ingredient of ingredients">
+        <div style="display: flex;">
+        <p>{{ingredient.quantity}} {{ingredient.measurement}} {{ingredient.ingredientsName}}</p>
+        <i class="fas fa-trash fa-xs delete-button" (click)="deleteIngredient(ingredient)"></i>
+        </div>
+        <hr class="hr hr-blurry"/>
+      </div>
+   </div>
+  </mat-tab>
+  <mat-tab label="Steps">
+    <div>
+      <div style="display: flex;">
+        <button type="button" class="btn btn-primary btn-floating add-button" (click)="addStep()">
+         <i class="fas fa-plus" ></i>
+        </button>
+      </div>
+      <div *ngFor="let step of steps;let index = index">
+        <h4>Step {{index+1}}</h4>
+        <div style="display: flex;">
+        <p>{{step.description}}</p>
+          <i class="fas fa-trash fa-xs delete-button" (click)="deleteStep(step)"></i>
+        </div>
+        <hr class="hr hr-blurry"  />
+      </div>
+     </div>
+  </mat-tab>
+  <mat-tab label="Galery">
+    <button mat-button (click)="changePhotos()" class="image-button rounded btn btn-primary btn-floating">
+      Manage photos
     </button>
-  </div>
-  <div *ngFor="let step of steps;let index = index">
-    <h4>Step {{index+1}}</h4>
-    <div style="display: flex;">
-    <p>{{step.description}}</p>
-      <i class="fas fa-trash fa-xs delete-button" (click)="deleteStep(step)"></i>
+    <div>
+      <img
+        *ngFor="let photo of photos"
+        [src]="photo.image"
+        class="img-fluid rounded single-image"
+      />
     </div>
-    <hr class="hr hr-blurry"  />
-  </div>
- </div>
+  </mat-tab>
+</mat-tab-group>
 </div>
+
+

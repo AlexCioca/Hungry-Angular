@@ -1,3 +1,43 @@
+<section class="cards" (click)="openRecipePage(recipe)">
+  <article class="card card--1">
+    <div class="card__info-hover">
+      <div class="card__clock-info">
+        <div class="card__rating">{{ recipeRating | number : "1.2-2" }} <i class="fa fa-star"></i></div>
+        <span class="card__time">{{ recipe?.preparationTime }} min</span>
+      </div>
+    </div>
+    <div class="card__img" ><img [src]="recipe?.mainPhoto"></div>
+
+    <div class="card__img--hover" [ngStyle]="{'background-image':'url('+ recipe?.mainPhoto +')'}"></div>
+
+    <div class="card__info">
+      <h3 class="card__title">{{ recipe?.name }}</h3>
+      <div class="card-bottom">
+        <span class="card__by">by <b>{{ recipeUser?.username }}</b></span>
+        <div class="card-like">
+          <h5>
+              {{ recipeLikes }}
+            <i
+              *ngIf="!isRecipeLiked"
+              class="fa-regular fa-heart heart-btn fa like-icon"
+              style="color: #ad7d52"
+              (click)="newLike($event)"
+            ></i>
+            <i
+              *ngIf="isRecipeLiked"
+              class="fa-solid fa-heart heart-btn fa like-icon"
+              style="color: #ad7d52"
+              (click)="deleteLike($event)"
+            ></i>
+
+          </h5>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!--
 <div
   class="card shadow-lg single-card"
   style="width: 50vh; height: auto; cursor: pointer"
@@ -13,6 +53,9 @@
     [infinite]="true"
     class="card-img-top images-box"
   ></ng-image-slider>
+
+
+
   <div class="card-body">
     <h5 class="card-title">{{ recipe?.name }}</h5>
     <p class="card-text">
@@ -40,4 +83,4 @@
     </div>
     </div>
   </div>
-</div>
+</div> -->

@@ -16,12 +16,16 @@
 .created-by{
   float:right;
 }
+.single-image {
+  margin: 1vh;
+}
 .image-button{
 
   width: 30%;
   margin-left: auto;
   margin-right: auto;
   margin-top:1vh;
+  margin-bottom: 1vh;
   background-color:#006400;
   border-color: #006400;
   color:white;
@@ -40,7 +44,6 @@
 .add-button
 {
   margin-top: 1.5vh;
-  margin-left: 2vh;
   height: 5vh;
   background-color: #006400;
   border-color: #006400;

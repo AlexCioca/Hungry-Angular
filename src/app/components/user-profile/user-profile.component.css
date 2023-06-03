@@ -1,0 +1,33 @@
+.user-profile-details{
+  margin-top: 7vh;
+  display: flex;
+}
+.profile-image{
+
+  width:20vh;
+  height:20vh;
+  margin-top: 2vh;
+  margin-left: 10vh;
+
+  }
+  .change-button{
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: #006400;
+    border-color: #006400;
+    margin-right: 10vh;
+    margin-left: auto;
+    height: 5vh;
+  }
+.user-details
+{
+  margin-top: 5vh;
+  margin-left: 5vh;
+}
+.card-list{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+

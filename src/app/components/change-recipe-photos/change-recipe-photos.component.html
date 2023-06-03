@@ -2,8 +2,10 @@
 <div class="container">
 <h1>Choose a photo</h1>
 <h5>If you want to delete a photo click on it</h5>
-<img *ngFor="let photo of photos" [src]="_sanitizer.bypassSecurityTrustResourceUrl(photo.image)" class="photos rounded" (click)="choosePhoto(photo.recipeImageId)">
+<div *ngIf="obs | async ; else loading">
+  <img *ngFor="let photo of photos" [src]="_sanitizer.bypassSecurityTrustResourceUrl(photo.image)" class="photos rounded" (click)="choosePhoto(photo.recipeImageId)">
 </div>
+<ng-template #loading>Loading...</ng-template>
 <div class="buttons-container">
 <button mat-button (click)="file.click()" class="image-button rounded">
   <input type="file" id="file" (change)="upload($event)" accept="image/*" #file  style="display:none;"/>

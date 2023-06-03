@@ -1,0 +1,32 @@
+<app-nav-bar></app-nav-bar>
+<div class="user-profile-details">
+  <img
+    *ngIf="user?.photo"
+    [src]="_sanitizer.bypassSecurityTrustResourceUrl(user?.photo!)"
+    alt=""
+    class="profile-image rounded-circle shadow"
+  />
+  <div  class="user-details">
+    <h1 class="username">{{ user?.username }}</h1>
+    <p><small>Followers: {{ followersNumber! }}</small></p>
+    <p><small>Following: {{ followingNumber! }}</small></p>
+  </div>
+  <button  *ngIf="follows;else elseBlock" class="btn btn-primary change-button" (click)="removeFollow()">Unfollow</button>
+  <ng-template #elseBlock>
+    <button class="btn btn-primary change-button" (click)="addFolower()">Follow</button>
+  </ng-template>
+</div>
+<hr class="hr hr-blurry" />
+<div
+      class="search-results"
+      infinite-scroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="100"
+    [scrollWindow]="true"
+    >
+<div class="card-list">
+  <div *ngFor="let recipe of recipes">
+    <app-recipe-card-module class="single-card" [recipe]="recipe"></app-recipe-card-module>
+  </div>
+</div>
+</div>

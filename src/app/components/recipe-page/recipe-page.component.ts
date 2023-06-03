@@ -9,13 +9,14 @@ import { RecipePageService } from './../../services/recipe-page.service';
 import { RecipeCardService } from './../../services/recipe-card.service';
 import { IRecipe } from './../../models/recipe';
 import { Component, Input, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ImageEncode } from 'src/app/utils/image-encoder';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { IRecipeSteps } from 'src/app/models/recipe-steps';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AddCommentComponent } from '../add-comment/add-comment.component';
+import { NgOptimizedImage } from '@angular/common'
 
 @Component({
   selector: 'app-recipe-page',
@@ -41,7 +42,8 @@ export class RecipePageComponent {
     public _sanitizer: DomSanitizer,
     private userService: UserService,
     config: NgbRatingConfig,
-    public dialogRef:MatDialog
+    public dialogRef:MatDialog,
+    private router:Router
   ) {
     config.max = 5;
     config.readonly = true;
@@ -83,6 +85,7 @@ export class RecipePageComponent {
         )
         .subscribe((data) => {
           this.photos = data;
+          console.log(this.photos)
           data.forEach((image) => {
             this.imgCollection.push({
               image: image.image,
@@ -130,5 +133,13 @@ export class RecipePageComponent {
     this.recipePageService.deleteReview(review).subscribe();
     this.userReview.splice(this.reviews.indexOf(review),1);
 
+  }
+  goToUser()
+  {
+    this.router.navigateByUrl('/users-profile/'+this.recipe?.userId);
+  }
+  goToUserFromComment(id:number)
+  {
+    this.router.navigateByUrl('/users-profile/'+id);
   }
 }

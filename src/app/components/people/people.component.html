@@ -11,7 +11,7 @@
     [scrollWindow]="true"
     >
     <ul *ngFor="let item of items" class="list-group list-group-light group-list">
-      <li class="list-group-item d-flex justify-content-between align-items-center" style="margin-top: 1vh;">
+      <li class="list-group-item d-flex justify-content-between align-items-center" style="margin-top: 1vh;" (click)="goToProfile(item.userId)">
         <div class="d-flex align-items-center">
           <img *ngIf="item.photo"  [src]="_sanitizer.bypassSecurityTrustResourceUrl(item?.photo!)" alt="" style="width: 45px; height: 45px"
             class="rounded-circle" />
@@ -36,7 +36,7 @@
     [scrollWindow]="true"
     >
     <ul *ngFor="let item of followed" class="list-group list-group-light group-list">
-      <li class="list-group-item d-flex justify-content-between align-items-center" style="margin-top: 1vh;">
+      <li class="list-group-item d-flex justify-content-between align-items-center" style="margin-top: 1vh;" (click)="goToProfile(item.userId)">
         <div class="d-flex align-items-center">
           <img *ngIf="item.photo"  [src]="_sanitizer.bypassSecurityTrustResourceUrl(item?.photo!)" alt="" style="width: 45px; height: 45px"
             class="rounded-circle" />
@@ -62,7 +62,7 @@
               <button type="submit" (click)="searchUser()" class="search-button rounded btn btn-primary btn-floating"> Search</button>
             </div>
             <ul *ngFor="let item of searchResult" class="list-group list-group-light group-list">
-              <li class="list-group-item d-flex justify-content-between align-items-center" style="margin-top: 1vh;">
+              <li class="list-group-item d-flex justify-content-between align-items-center" style="margin-top: 1vh;" (click)="goToProfile(item.userId)">
                 <div class="d-flex align-items-center">
                   <img *ngIf="item.photo"  [src]="_sanitizer.bypassSecurityTrustResourceUrl(item?.photo!)" alt="" style="width: 45px; height: 45px"
                     class="rounded-circle" />

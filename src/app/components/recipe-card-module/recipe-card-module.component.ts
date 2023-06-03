@@ -24,6 +24,7 @@ export class RecipeCardModuleComponent {
   recipeLikes: number = 0;
   isRecipeLiked: boolean = false;
   category?:ICategory;
+  photo:any;
 
   constructor(
     private recipeCardService: RecipeCardService,
@@ -46,12 +47,14 @@ export class RecipeCardModuleComponent {
       .subscribe((data) => {
         this.photos = data;
         data.forEach((image) => {
+          this.photo=image.image;
           this.imgCollection.push({
             image: image.image,
             thumbImage: image.image,
             title: '',
           });
         });
+
       });
     this.recipeCardService
       .getRecipeRating(this.recipe?.recipeId!)
@@ -98,4 +101,8 @@ export class RecipeCardModuleComponent {
     this.isRecipeLiked=!this.isRecipeLiked;
     this.recipeLikes-=1;
   }
+
+
+
+
 }

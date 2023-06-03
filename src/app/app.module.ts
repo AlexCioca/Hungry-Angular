@@ -7,7 +7,6 @@ import {
   GoogleLoginProvider
 } from '@abacritt/angularx-social-login';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { GoogleLoginComponent } from './components/google-login/google-login.component';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './components/login/login.component';
@@ -44,6 +43,8 @@ import { AddStepComponent } from './components/add-step/add-step.component';
 import { LikedRecipesComponent } from './components/liked-recipes/liked-recipes.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { SurpriseRecipesComponent } from './components/surprise-recipes/surprise-recipes.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -53,7 +54,6 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    GoogleLoginComponent,
     LoginComponent,
     SignUpComponent,
     HomeComponent,
@@ -71,7 +71,9 @@ export function tokenGetter() {
     AddStepComponent,
     LikedRecipesComponent,
     UnauthorizedComponent,
-    SurpriseRecipesComponent
+    SurpriseRecipesComponent,
+    UserProfileComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,

@@ -52,6 +52,7 @@ export class LoginComponent {
         this.currentUser!.lastName = this.user.lastName;
         this.auth.login(this.currentUser!).subscribe((x) => {
           localStorage.setItem('token', x);
+          this.router.navigateByUrl('home');
         });
         this.router.navigateByUrl('home');
       }

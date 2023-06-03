@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { RecipePageService } from 'src/app/services/recipe-page.service';
 import { ImageEncode } from 'src/app/utils/image-encoder';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-change-recipe-photos',
@@ -13,7 +14,7 @@ import { ImageEncode } from 'src/app/utils/image-encoder';
 })
 export class ChangeRecipePhotosComponent {
   photos: IRecipeImages[] = [];
-
+  obs =  new Observable();
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { id: number },
     public _sanitizer: DomSanitizer,
@@ -21,18 +22,22 @@ export class ChangeRecipePhotosComponent {
     public dialogRef: MatDialogRef<any>
   ) {
 
-    this.recipePageService
-      .getRecipePhotos(this.data.id)
-      .subscribe((x) => (this.photos = x));
   }
-  ngOnInit(): void {}
+  ngOnInit():void {
+
+    this.obs=this.recipePageService.getRecipePhotos(this.data.id);
+    this.obs.subscribe(data=> this.photos=data as IRecipeImages[]);
+
+  }
 
   async choosePhoto(id: number) {
-    (await this.recipePageService.deletePhoto(id)).subscribe(
+    (this.recipePageService.deletePhoto(id)).subscribe(
     );
-    (await this.recipePageService.getRecipePhotos(this.data.id)).subscribe(
-      (x) => (this.photos = x)
-    );
+    console.log(this.photos)
+
+
+    this.photos.splice(this.photos.findIndex(x => x.recipeImageId==id),1);
+    console.log(this.photos)
   }
 
   close() {
@@ -48,9 +53,7 @@ export class ChangeRecipePhotosComponent {
       recipeId: this.data.id,
     };
 
-    (await this.recipePageService.addPhotoToRecipe(recipeImage)).subscribe();
-    (await this.recipePageService.getRecipePhotos(this.data.id)).subscribe(
-      (x) => (this.photos = x)
-    );
+    ( this.recipePageService.addPhotoToRecipe(recipeImage)).subscribe(data=>this.photos.push(data));
+
   }
 }

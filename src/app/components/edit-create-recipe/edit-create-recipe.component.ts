@@ -31,12 +31,6 @@ import { ICategory } from 'src/app/models/category';
 export class EditCreateRecipeComponent {
   recipe?: IRecipe;
   photos?: IRecipeImages[] = [];
-  imgCollection: Array<{
-    image: string;
-    thumbImage?: string;
-    title?: string;
-    imageId: number;
-  }> = [];
   owner?: IUser;
   ingredients: IIngredients[] = [];
   steps: IRecipeSteps[] = [];
@@ -76,21 +70,14 @@ export class EditCreateRecipeComponent {
     config.max = 5;
     config.readonly = true;
     if (parseInt(this.activatedRouter.snapshot.paramMap.get('id')!)) {
-      this.userService.getUserByToken().subscribe(data =>
-        {
-          console.log(this.recipe?.userId);
-          if(data.userId!==this.recipe?.userId)
-          {
-            this.router.navigateByUrl("unauthorized");
-          }
-        }
-        )
+
       recipePageService
         .getRecipeById(
           parseInt(this.activatedRouter.snapshot.paramMap.get('id')!)
         )
         .subscribe((x) => {
           this.recipe = x;
+
           this.recipeForm.controls['nameControl'].setValue(this.recipe.name);
           this.recipeForm.controls['descriptionControl'].setValue(
             this.recipe.description
@@ -129,14 +116,6 @@ export class EditCreateRecipeComponent {
         )
         .subscribe((data) => {
           this.photos = data;
-          data.forEach((image) => {
-            this.imgCollection.push({
-              image: image.image,
-              thumbImage: image.image,
-              title: '',
-              imageId: image.recipeImageId,
-            });
-          });
         });
         this.recipePageService
         .getRecipeCategory(parseInt(this.activatedRouter.snapshot.paramMap.get('id')!))
@@ -159,7 +138,7 @@ export class EditCreateRecipeComponent {
       image: imageCode as string,
       recipeId: parseInt(this.activatedRouter.snapshot.paramMap.get('id')!),
     };
-    (await this.recipePageService.addPhotoToRecipe(recipeImage)).subscribe();
+    (this.recipePageService.addPhotoToRecipe(recipeImage)).subscribe();
   }
 
   changePhotos() {
@@ -189,14 +168,7 @@ export class EditCreateRecipeComponent {
           )
           .subscribe((data) => {
             this.photos = data;
-            data.forEach((image) => {
-              this.imgCollection.push({
-                image: image.image,
-                thumbImage: image.image,
-                title: '',
-                imageId: image.recipeImageId,
-              });
-            });
+
           });
       });
     }
@@ -217,17 +189,18 @@ export class EditCreateRecipeComponent {
       createdDate: new Date(Date.now()),
     };
 
-    this.recipePageService
-      .addRecipeCategory(this.recipe?.recipeId!, this.category.categoryId)
-      .subscribe();
 
     this.userService.getUserByToken().subscribe((data) => {
       newRecipe.userId = data.userId;
       this.recipePageService.addRecipe(newRecipe).subscribe((data) => {
+        this.recipePageService
+      .addRecipeCategory(data.recipeId, this.category.categoryId)
+      .subscribe();
         this.router.navigateByUrl('/edit-create-recipe/' + data.recipeId);
+
       });
     });
-    console.log(this.category);
+
   }
   updateRecipe() {
     this.recipe!.name = this.recipeForm.controls['nameControl']?.value!;
@@ -239,11 +212,12 @@ export class EditCreateRecipeComponent {
       this.recipeForm.controls['preparationControl']?.value!
     );
 
+    console.log(this.category)
     this.recipePageService
       .updateRecipeCategory(this.recipe?.recipeId!, this.category.categoryId)
       .subscribe();
     this.recipePageService.updateRecipe(this.recipe!).subscribe();
-    console.log(this.category);
+
   }
   addIngredient() {
     let recipeId = parseInt(this.activatedRouter.snapshot.paramMap.get('id')!);
@@ -299,5 +273,11 @@ export class EditCreateRecipeComponent {
   deleteStep(step: IRecipeSteps) {
     this.recipePageService.deleteStep(step).subscribe();
     this.steps.splice(this.steps.indexOf(step), 1);
+  }
+  async changeMainPhoto(event: any){
+    let imageCode = await ImageEncode.fileToByteArray(event.target.files[0]);
+    let recipeId = parseInt(this.activatedRouter.snapshot.paramMap.get('id')!);
+    this.recipe!.mainPhoto=imageCode as string;
+    this.recipePageService.updateMainPhotoForRecipe(recipeId,imageCode as string).subscribe(data => console.log(data));
   }
 }

@@ -4,6 +4,7 @@ import { IUser } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-people',
@@ -21,7 +22,8 @@ export class PeopleComponent {
   constructor(
     private userService: UserService,
     public _sanitizer: DomSanitizer,
-    private userFollowerService: UserFolowerService
+    private userFollowerService: UserFolowerService,
+    private router: Router
   ) {
     this.userService.getPeopleForFollow(0).subscribe((users) => {
       if (users) {
@@ -89,5 +91,9 @@ export class PeopleComponent {
     if (nr) {
       return true;
     } else return false;
+  }
+
+  goToProfile(id:number){
+    this.router.navigateByUrl('/users-profile/'+id);
   }
 }
