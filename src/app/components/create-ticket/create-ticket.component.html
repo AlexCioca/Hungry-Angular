@@ -1,0 +1,13 @@
+
+<div class="container">
+  <h2>Add the reason of report</h2>
+  <textarea name="text" cols="40" rows="5"  [(ngModel)]="ticket!.reason"></textarea>
+  <button
+    mat-button
+    class="btn btn-primary add-button"
+    type="submit"
+    (click)="createTicket()"
+  >
+    Add Comment
+  </button>
+</div>

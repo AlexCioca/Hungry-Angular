@@ -1,3 +1,4 @@
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { SurpriseRecipesComponent } from './components/surprise-recipes/surprise-recipes.component';
@@ -22,7 +23,9 @@ const routes:Routes=[
   {path:"edit-create-recipe/:id", component:EditCreateRecipeComponent,pathMatch:'full',canActivate:[AuthGuardService]},
   {path:"edit-create-recipe", component:EditCreateRecipeComponent,pathMatch:'full',canActivate:[AuthGuardService]},
   {path:"home", component:HomeComponent,pathMatch:'full',canActivate:[AuthGuardService]},
+  {path:"admin-panel", component:AdminPanelComponent,pathMatch:'full',canActivate:[AuthGuardService]},
   {path:"chat", component:ChatComponent,pathMatch:'full',canActivate:[AuthGuardService]},
+  {path:"chat/:id", component:ChatComponent,pathMatch:'full',canActivate:[AuthGuardService]},
   {path:"users-recipes", component:UsersRecipesComponent,pathMatch:'full',canActivate:[AuthGuardService]},
   {path:"users-profile/:id", component:UserProfileComponent,pathMatch:'full',canActivate:[AuthGuardService]},
   {path:"recipe-page/:id", component:RecipePageComponent,pathMatch:'full',canActivate:[AuthGuardService]},

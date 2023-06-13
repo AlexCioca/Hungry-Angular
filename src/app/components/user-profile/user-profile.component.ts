@@ -3,7 +3,7 @@ import { UserFolowerService } from './../../services/user-folower.service';
 import { IUser } from './../../models/user';
 import { UserService } from './../../services/user.service';
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { UsersRecipesService } from 'src/app/services/users-recipes.service';
 
@@ -23,7 +23,8 @@ export class UserProfileComponent {
     private userService: UserService,
     public _sanitizer: DomSanitizer,
     private userFollowerService: UserFolowerService,
-    private userRecipeService: UsersRecipesService
+    private userRecipeService: UsersRecipesService,
+    private router:Router
   ) {
     this.userService
       .getUserById(parseInt(this.activatedRouter.snapshot.paramMap.get('id')!))
@@ -39,7 +40,7 @@ export class UserProfileComponent {
       )
       .subscribe((data) => {
         this.followingNumber = data;
-        console.log(data);
+
       });
     this.checkFollow();
     this.userRecipeService
@@ -64,6 +65,10 @@ export class UserProfileComponent {
       .addNewFollow(parseInt(this.activatedRouter.snapshot.paramMap.get('id')!))
       .subscribe();
     this.follows = true;
+  }
+  goToMessage()
+  {
+      this.router.navigateByUrl("/chat/"+parseInt(this.activatedRouter.snapshot.paramMap.get('id')!))
   }
 
   removeFollow() {

@@ -1,7 +1,10 @@
 <head>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
+
+
 <app-nav-bar></app-nav-bar>
+
 <div *ngIf="!newRecipe" class="add-button-div"  style="margin-top:7vh;">
   <button mat-button class="btn btn-primary change-button" type="submit" (click)=" saveChanges()"> Add Recipe</button>
 </div>
@@ -70,11 +73,11 @@
     </div>
   </form>
   </div>
- <mat-tab-group>
+ <mat-tab-group >
   <mat-tab label="Ingredients">
     <div>
       <div style="display: flex;">
-        <button type="button" class="btn btn-primary btn-floating add-button" (click)="addIngredient()">
+        <button type="button" class="btn btn-primary btn-floating add-button" style="margin-left: 2vh; margin-right: 2vh;  margin-bottom: 2vh;"(click)="addIngredient()">
           <i class="fas fa-plus"></i>
         </button>
       </div>
@@ -90,7 +93,7 @@
   <mat-tab label="Steps">
     <div>
       <div style="display: flex;">
-        <button type="button" class="btn btn-primary btn-floating add-button" (click)="addStep()">
+        <button type="button" class="btn btn-primary btn-floating add-button" style="margin-left: 2vh; margin-right: 2vh; margin-bottom: 2vh;" (click)="addStep()">
          <i class="fas fa-plus" ></i>
         </button>
       </div>
@@ -105,7 +108,7 @@
      </div>
   </mat-tab>
   <mat-tab label="Galery">
-    <button mat-button (click)="changePhotos()" class="image-button rounded btn btn-primary btn-floating">
+    <button mat-button (click)="changePhotos()" class="image-button rounded btn btn-primary btn-floating" style="margin-left: 2vh; margin-right: 2vh; margin-bottom: 2vh;">
       Manage photos
     </button>
     <div>
@@ -118,5 +121,6 @@
   </mat-tab>
 </mat-tab-group>
 </div>
+
 
 

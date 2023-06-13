@@ -1,15 +1,45 @@
-<div class="ud-header">
-  <h2 class="text-center">Public Chat</h2>
-</div>
-<div class="ud-body">
-  <div class="msg-box">
-    <ul>
-      <li *ngFor="let mObj of msgInboxArray" [ngClass]="mObj.user === msgDto.user ? 'in-msg' : 'ex-msg'">{{mObj.user}} :<br /><span class="msg-italic-style">{{mObj.msgText}}</span></li>
-    </ul>
+<body>
+  <app-nav-bar></app-nav-bar>
+  <div class="main-container">
+<div class="user-div">
+        <img
+        *ngIf="user?.photo"
+        [src]="_sanitizer.bypassSecurityTrustResourceUrl(user?.photo!)"
+        alt=""
+        class="profile-image rounded-circle shadow"
+      />
+        <h1 style="margin-top:auto;margin-bottom: auto;margin-left:2vh">{{ user?.username }}</h1>
+      </div>
+
+    <blockquote class="chat">
+      <div class="chat-div" #myDiv  [scrollTop]="scrollHeight">
+        <div *ngFor="let item of conversationMessages">
+          <small *ngIf="checkDate(item.timeStamp)" class="text-muted">{{item.timeStamp|date:'mediumDate'}} </small>
+        <p
+          [ngClass]="{
+            them: recivingUserId != item.reciverId,
+            me: recivingUserId == item.reciverId
+          }"
+        >
+          {{ item.messageText }}
+
+        </p>
+       <small class="text-muted">{{item.timeStamp|date:'shortTime'}}</small>
+      </div>
+      </div>
+    </blockquote>
+    <form class="send-form" (ngSubmit)="sendMessage(message.value)">
+      <input
+        type="text"
+        placeholder="Message"
+        class="rounded"
+        style="height: 7vh; margin-right: 1vh"
+        #message
+        required
+      />
+      <button type="submit" class="btn btn-primary save-button">
+        Send Message
+      </button>
+    </form>
   </div>
-  <div class="ud-flex-row">
-    <input type="text" placeholder="Type message here" class="msg-input" [(ngModel)]="msgDto.msgText"  />
-    <button class="send-btn" (click)= "send()"><i class="fa fa-paper-plane"></i></button>
-  </div>
-  <input type="text" placeholder="Your name" class="name-box" [(ngModel)]="msgDto.user" />
-</div>
+</body>

@@ -99,6 +99,12 @@ export class RecipePageService {
       { body: review }
     );
   }
+  deleteRecipe(id: number) {
+    return this.http.delete<IRecipe>(
+      `${this.endpoint}/Recipe/DeleteRecipe?id=`+id
+
+    );
+  }
   getRecipeCategory(recipeId: number) {
     return this.http.get<ICategory>(
       `${this.endpoint}/Recipe/GetRecipeCategory?recipeId=` + recipeId

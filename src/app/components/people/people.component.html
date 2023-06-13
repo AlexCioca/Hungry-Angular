@@ -1,9 +1,10 @@
+
 <app-nav-bar></app-nav-bar>
 <div style="margin-top:7vh;">
 <mat-tab-group >
   <mat-tab label="New People">
     <div
-      class="search-results"
+      class="search-results overflow-y: scroll;"
       infinite-scroll
     [infiniteScrollDistance]="2"
     [infiniteScrollThrottle]="100"
@@ -84,3 +85,4 @@
     </mat-tab>
   </mat-tab-group>
 </div>
+

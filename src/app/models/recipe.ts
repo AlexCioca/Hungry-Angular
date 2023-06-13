@@ -8,4 +8,5 @@ export interface IRecipe{
   difficulty:string;
   preparationTime:number;
   serves:number;
+  isDeleted:boolean;
 }

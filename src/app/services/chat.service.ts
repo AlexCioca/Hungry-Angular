@@ -9,52 +9,77 @@ import { Message } from '../models/message';
 })
 export class ChatService {
 
-  private  connection: any = new signalR.HubConnectionBuilder().withUrl("https://localhost:7070/chatsocket")   // mapping to the chathub as in startup.cs
-  .configureLogging(signalR.LogLevel.Information)
-  .build();
+  private hubConnection?: signalR.HubConnection;
 
-endpoint = 'https://localhost:7070/api';
-private receivedMessageObject: Message = new Message();
-private sharedObj = new Subject<Message>();
+  endpoint = 'https://localhost:7070/api'
+  constructor(private http:HttpClient) { }
 
-constructor(private http: HttpClient) {
-this.connection.onclose(async () => {
-await this.start();
-});
-this.connection.on("ReceiveOne", (user: string, message: string) => { this.mapReceivedMessage(user, message); });
-this.start();
+  startConnection() {
+    this.hubConnection! = new signalR.HubConnectionBuilder()
+      .withUrl('https://localhost:7070/chatsocket',{ accessTokenFactory: () => this.getUserToken()! })
+      .build();
+
+    this.hubConnection.start()
+      .then(() => console.log('SignalR connection established.'))
+      .catch(err => console.error('Error while starting SignalR connection:', err));
+  }
+
+  sendMessage(message: Message) {
+    this.hubConnection?.invoke('SendMessage', message)
+      .then(() => console.log('Message sent.'))
+      .catch(err => console.error('Error while sending message:', err));
+  }
+
+  receiveMessage(callback: (message: Message) => void) {
+    this.hubConnection?.on('ReceiveMessage', (message: Message) => {
+      this.seenMessage(message).subscribe();
+      callback(message);
+    });
+  }
+
+  stopConnection() {
+    this.hubConnection?.stop()
+      .then(() => console.log('SignalR connection stopped.'))
+      .catch(err => console.error('Error while stopping SignalR connection:', err));
+  }
+
+  getUserToken()
+  {
+    let tok = localStorage.getItem('token');
+    return tok;
+  }
+
+  getConversationMessages(reciverId:number)
+  {
+    return this.http.get<Message[]>(`${this.endpoint}/chat/GetConversationMessages?receiverId=`+reciverId);
+  }
+
+  getNewMessagesForUser()
+  {
+    return this.http.get<Message[]>(`${this.endpoint}/chat/GetNewMessagesForUser`);
+  }
+
+  seenMessage(message:Message)
+  {
+    return this.http.put<Message[]>(`${this.endpoint}/chat/SeenMessage`,message);
+  }
+
 }
 
 
-// Strart the connection
-public async start() {
-try {
-await this.connection.start();
-console.log("connected");
-} catch (err) {
-console.log(err);
-setTimeout(() => this.start(), 5000);
-}
-}
-
-private mapReceivedMessage(user: string, message: string): void {
-this.receivedMessageObject.user = user;
-this.receivedMessageObject.msgText = message;
-this.sharedObj.next(this.receivedMessageObject);
-}
-
-public broadcastMessage(msgDto: any) {
-
-return this.http.post<any>(
-  `${this.endpoint}/chat/send`,
-  msgDto
-);
-// this.connection.invoke("SendMessage1", msgDto.user, msgDto.msgText).catch(err => console.error(err));    // This can invoke the server method named as "SendMethod1" directly.
-}
-
-public retrieveMappedObject(): Observable<Message> {
-return this.sharedObj.asObservable();
-}
 
 
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

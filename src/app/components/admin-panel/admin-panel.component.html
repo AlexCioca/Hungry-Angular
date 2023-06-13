@@ -1,0 +1,10 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="main-container">
+  <div *ngIf="tickets.length<1"> No tickets yet</div>
+  <div *ngFor="let item of tickets" (click)="openTicket(item.ticketId)">
+      <h2>{{item.reason}}</h2>
+      <h6>For recipe number :{{item.recipeId}} and user Id :{{item.userId}}</h6>
+    <hr class="hr hr-blurry" />
+  </div>
+</div>

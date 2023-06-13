@@ -1,0 +1,11 @@
+.main-container{
+ margin-top:2vh;
+}
+.notification-container{
+  margin-left:1vh;
+  cursor:pointer;
+}
+.profile-image{
+  height: 4vh;
+  width:4vh;
+}

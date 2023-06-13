@@ -33,11 +33,7 @@ export class ChangeRecipePhotosComponent {
   async choosePhoto(id: number) {
     (this.recipePageService.deletePhoto(id)).subscribe(
     );
-    console.log(this.photos)
-
-
     this.photos.splice(this.photos.findIndex(x => x.recipeImageId==id),1);
-    console.log(this.photos)
   }
 
   close() {

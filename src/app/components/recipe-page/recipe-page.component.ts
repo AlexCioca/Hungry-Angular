@@ -1,3 +1,4 @@
+import { CreateTicketComponent } from './../create-ticket/create-ticket.component';
 import { ICategory } from './../../models/category';
 import { IRecipeReview } from '../../models/recipe-review';
 import { IIngredients } from './../../models/ingredient';
@@ -85,7 +86,7 @@ export class RecipePageComponent {
         )
         .subscribe((data) => {
           this.photos = data;
-          console.log(this.photos)
+
           data.forEach((image) => {
             this.imgCollection.push({
               image: image.image,
@@ -103,7 +104,7 @@ export class RecipePageComponent {
     .getRecipeCategory(parseInt(this.activatedRouter.snapshot.paramMap.get('id')!))
     .subscribe((data) => {
       this.category = data;
-      console.log(data);
+
     });
 
   }
@@ -141,5 +142,25 @@ export class RecipePageComponent {
   goToUserFromComment(id:number)
   {
     this.router.navigateByUrl('/users-profile/'+id);
+  }
+  reportRecipe()
+  {
+    let id = parseInt(this.activatedRouter.snapshot.paramMap.get('id')!);
+    const commentDialogConfig = new MatDialogConfig();
+
+    commentDialogConfig.autoFocus = true;
+    commentDialogConfig.width = '50%';
+    commentDialogConfig.height = '50%';
+    commentDialogConfig.data = {
+      id
+    };
+    const dialog = this.dialogRef.open(
+      CreateTicketComponent,
+      commentDialogConfig
+    );
+
+    dialog.afterClosed().subscribe((data) => {
+
+    });
   }
 }

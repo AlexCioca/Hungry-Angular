@@ -21,6 +21,11 @@ export class UserService {
   return this.http.get<IUser>(`${this.endpoint}/User/GetUserByToken`);
  }
 
+ getUserRole()
+ {
+  return this.http.get(`${this.endpoint}/User/GetUserRole`,{ responseType: 'text' });
+ }
+
  getUserByUsername(username:string)
  {
   return this.http.get<IUser>(`${this.endpoint}/User/GetUserByUsername/`+username);

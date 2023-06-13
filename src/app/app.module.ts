@@ -45,6 +45,10 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
 import { SurpriseRecipesComponent } from './components/surprise-recipes/surprise-recipes.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { MessageNotificationsComponent } from './components/message-notifications/message-notifications.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { TicketComponent } from './components/ticket/ticket.component';
+import { CreateTicketComponent } from './components/create-ticket/create-ticket.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -74,6 +78,10 @@ export function tokenGetter() {
     SurpriseRecipesComponent,
     UserProfileComponent,
     ChatComponent,
+    MessageNotificationsComponent,
+    AdminPanelComponent,
+    TicketComponent,
+    CreateTicketComponent,
   ],
   imports: [
     BrowserModule,

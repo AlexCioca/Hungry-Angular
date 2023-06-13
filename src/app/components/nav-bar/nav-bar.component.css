@@ -20,7 +20,7 @@ margin-left: auto;
 
 .left-buttons{
   margin-right: auto;
-  visibility: hidden;
+  margin-left:4vh;
 }
  .navbar-item
 {

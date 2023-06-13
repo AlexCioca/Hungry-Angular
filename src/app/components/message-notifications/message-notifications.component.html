@@ -1,0 +1,15 @@
+
+<div *ngIf="newMessages.length==0">
+  <h1> No messages for you</h1>
+</div>
+<div class="main-container" *ngIf="newMessages">
+  <div *ngFor="let item of newMessages" class="notification-container" (click)="goToMessage(item.message)">
+    <img *ngIf="item.userPhoto"
+  [src]="_sanitizer.bypassSecurityTrustResourceUrl(item.userPhoto)"
+  alt=""
+  class="profile-image rounded-circle shadow"
+  />
+     You have a new message from {{item.username}}
+    <hr class="hr hr-blurry" />
+  </div>
+</div>

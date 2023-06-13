@@ -121,7 +121,7 @@ export class EditCreateRecipeComponent {
         .getRecipeCategory(parseInt(this.activatedRouter.snapshot.paramMap.get('id')!))
         .subscribe((data) => {
           this.category = data;
-          console.log(data);
+
         });
     }
     this.searchService
@@ -187,6 +187,7 @@ export class EditCreateRecipeComponent {
       recipeId: 0,
       mainPhoto: '',
       createdDate: new Date(Date.now()),
+      isDeleted:false
     };
 
 
@@ -212,7 +213,7 @@ export class EditCreateRecipeComponent {
       this.recipeForm.controls['preparationControl']?.value!
     );
 
-    console.log(this.category)
+
     this.recipePageService
       .updateRecipeCategory(this.recipe?.recipeId!, this.category.categoryId)
       .subscribe();
@@ -278,6 +279,6 @@ export class EditCreateRecipeComponent {
     let imageCode = await ImageEncode.fileToByteArray(event.target.files[0]);
     let recipeId = parseInt(this.activatedRouter.snapshot.paramMap.get('id')!);
     this.recipe!.mainPhoto=imageCode as string;
-    this.recipePageService.updateMainPhotoForRecipe(recipeId,imageCode as string).subscribe(data => console.log(data));
+    this.recipePageService.updateMainPhotoForRecipe(recipeId,imageCode as string).subscribe();
   }
 }

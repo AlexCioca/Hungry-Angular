@@ -6,6 +6,8 @@
     crossorigin="anonymous"
   />
 </head>
+
+
 <app-nav-bar></app-nav-bar>
 
 <div class="container">
@@ -39,6 +41,7 @@
       <em>{{ recipe?.description }}</em>
     </h4>
   </div>
+  <button (click)="reportRecipe()" class="rounded btn btn-primary btn-floating add-comment-button">Report Recipe</button>
 
   <mat-tab-group>
     <mat-tab label="Ingredients">
@@ -57,7 +60,7 @@
         <hr class="hr hr-blurry" style="height: 5vh" />
       </div>
     </mat-tab>
-    <mat-tab label="Galery">
+    <mat-tab label="Gallery">
       <div>
         <img
           *ngFor="let photo of photos"
